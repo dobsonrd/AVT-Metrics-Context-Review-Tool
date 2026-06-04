@@ -216,7 +216,7 @@ button:active{transform:scale(0.98)}
 <div style="background:var(--color-background-warning);border-bottom:.5px solid var(--color-border-warning);padding:10px 1.5rem;display:flex;align-items:flex-start;gap:10px">
   <i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:15px;color:var(--color-text-warning);flex-shrink:0;margin-top:1px"></i>
   <div style="font-size:12px;color:var(--color-text-warning);line-height:1.65">
-    <strong>This site has been drafted with AI assistance and human-reviewed.</strong> Keep this front of mind and please flag anything that looks wrong — feedback on errors is welcome. This is shared to support conversation arround AI assurance, this is not NHS-endorsed.
+    <strong>This site has been drafted with AI assistance and human-reviewed.</strong> Keep this front of mind and please flag anything that looks wrong — feedback on errors is welcome. This is shared to support conversation, not as a settled standard.
     <span onclick="switchTop('history',document.querySelectorAll('.top-tab')[3])" style="cursor:pointer;text-decoration:underline;text-underline-offset:2px;margin-left:4px">See the version &amp; history page for recent changes.</span>
   </div>
 </div>
@@ -231,7 +231,7 @@ button:active{transform:scale(0.98)}
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
     <span id="sync-status" style="font-size:11px;transition:color .3s"></span>
-    <span style="font-size:11px;color:var(--color-text-tertiary)">v1.9</span>
+    <span style="font-size:11px;color:var(--color-text-tertiary)">v2.1</span>
     <button onclick="clearStorage()" style="font-size:11px;padding:3px 10px;color:var(--color-text-tertiary);border-color:var(--color-border-tertiary)" title="Clear all saved decisions and reset"><i class="ti ti-trash" aria-hidden="true"></i> Reset</button>
     <div class="page-header-badge"><i class="ti ti-building-hospital" aria-hidden="true"></i> Acute outpatients &amp; ED</div>
   </div>
@@ -248,7 +248,7 @@ button:active{transform:scale(0.98)}
 
 <div id="view-buckets" class="view active">
   <div style="padding:.75rem 1.25rem .25rem">
-    <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:.75rem">Seven buckets group the 58 Tier 1 metrics into thematic clusters. Edit any definition or rationale to capture the group's agreed wording. Click a metric chip to jump to that metric's review card.</div>
+    <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:.75rem">Seven buckets group the 58 Tier 1 metrics into thematic clusters. Edit any definition or rationale to capture the group's agreed wording. Click a metric chip to jump to that metric's review card. Hazard IDs link to the <strong>AVT Hazard Log V0.8</strong> — click any badge to see the full hazard detail and possible causes.</div>
   </div>
   <div class="bucket-grid" id="bucket-grid"></div>
 </div>
@@ -323,8 +323,32 @@ button:active{transform:scale(0.98)}
 
       <div style="display:grid;grid-template-columns:90px 1fr;gap:0;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:10px">
         <div style="background:var(--color-background-info);padding:14px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-right:.5px solid var(--color-border-info)">
-          <div style="font-size:13px;font-weight:600;color:var(--color-text-info)">v1.9</div>
+          <div style="font-size:13px;font-weight:600;color:var(--color-text-info)">v2.1</div>
           <div style="font-size:10px;color:var(--color-text-info);margin-top:2px">Current</div>
+        </div>
+        <div style="padding:12px 16px;background:var(--color-background-primary)">
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Hazard detail click-through · Source attribution</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">
+            Hazard badges on bucket cards are now clickable and open a modal showing the full hazard detail — title, date added, effect, and all possible causes — reproduced from the <strong>AVT Hazard Log V0.8</strong> provided by the user. Each modal carries a source attribution note making clear that hazard content originates from the user-provided document and that risk scores, controls, and residual risk assessments should be referenced there. The buckets tab intro text updated to reference the hazard log. Escape key and clicking outside the modal both close it.
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:90px 1fr;gap:0;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:10px">
+        <div style="background:var(--color-background-secondary);padding:14px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-right:.5px solid var(--color-border-tertiary)">
+          <div style="font-size:13px;font-weight:600;color:var(--color-text-secondary)">v2.0</div>
+        </div>
+        <div style="padding:12px 16px;background:var(--color-background-primary)">
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Clinical hazard linkage — buckets linked to hazard log</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">
+            Each bucket card on the Buckets tab now shows the related clinical hazard IDs from the AVT Hazard Log (V0.8). Hovering over a hazard badge shows the full hazard description. Hazards were mapped from the uploaded hazard log: Transcription Accuracy → AVT01; Clinical Summarisation → AVT01, AVT05, AVT08; EPR Write-back &amp; Integration Integrity → AVT02, AVT03; Human Oversight → AVT05, AVT07; Privacy &amp; Data Governance → AVT04, AVT06, AVT09; Governance &amp; Safety Management → AVT07; Procurement, Equity &amp; Enablement → AVT06, AVT07.
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:90px 1fr;gap:0;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:10px">
+        <div style="background:var(--color-background-secondary);padding:14px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-right:.5px solid var(--color-border-tertiary)">
+          <div style="font-size:13px;font-weight:600;color:var(--color-text-secondary)">v1.9</div>
         </div>
         <div style="padding:12px 16px;background:var(--color-background-primary)">
           <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Clinician Training Completion Rate moved to Governance &amp; Safety Management</div>
@@ -339,9 +363,9 @@ button:active{transform:scale(0.98)}
           <div style="font-size:13px;font-weight:600;color:var(--color-text-secondary)">v1.8</div>
         </div>
         <div style="padding:12px 16px;background:var(--color-background-primary)">
-          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Agreed bucket rename — first three buckets</div>
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Workshop-agreed bucket rename — first three buckets</div>
           <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">
-            Following review, the first three buckets were renamed and their metric assignments updated. <strong>Clinical content safety</strong> → <strong>Transcription Accuracy</strong> (retaining TP.ASR-12, gaining TP.AC-5 and TP.ASR-4 from Procurement &amp; Equity). <strong>Numeric &amp; coding accuracy</strong> → <strong>Clinical Summarisation</strong> (retaining TP.ASR-13, TP.CC-6, TP.WB-8, and gaining TP.SN-5, TP.SN-6, TP.SN-15, TP.SN-20 from the former Clinical content safety bucket). <strong>Write-back &amp; integration integrity</strong> → <strong>EPR Write-back &amp; Integration Integrity</strong> (metrics unchanged). The remaining four buckets — Human Oversight, Privacy &amp; Data Governance, Governance &amp; Safety Management, Procurement Equity &amp; Enablement — are unchanged.
+            Following the workshop, the first three buckets were renamed and their metric assignments updated. <strong>Clinical content safety</strong> → <strong>Transcription Accuracy</strong> (retaining TP.ASR-12, gaining TP.AC-5 and TP.ASR-4 from Procurement &amp; Equity). <strong>Numeric &amp; coding accuracy</strong> → <strong>Clinical Summarisation</strong> (retaining TP.ASR-13, TP.CC-6, TP.WB-8, and gaining TP.SN-5, TP.SN-6, TP.SN-15, TP.SN-20 from the former Clinical content safety bucket). <strong>Write-back &amp; integration integrity</strong> → <strong>EPR Write-back &amp; Integration Integrity</strong> (metrics unchanged). The remaining four buckets — Human Oversight, Privacy &amp; Data Governance, Governance &amp; Safety Management, Procurement Equity &amp; Enablement — are unchanged.
           </div>
         </div>
       </div>
@@ -452,20 +476,146 @@ button:active{transform:scale(0.98)}
   </div>
 </div>
 
+<!-- Hazard detail modal -->
+<div id="hazard-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.45);align-items:center;justify-content:center;padding:1.5rem" onclick="closeHazard(event)">
+  <div style="background:var(--color-background-primary);border-radius:var(--border-radius-xl);max-width:580px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.18)" onclick="event.stopPropagation()">
+    <div style="padding:1rem 1.25rem;border-bottom:.5px solid var(--color-border-tertiary);display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+      <div>
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--color-text-danger);margin-bottom:4px" id="hm-id"></div>
+        <div style="font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.4" id="hm-title"></div>
+        <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:4px">Added: <span id="hm-date"></span> &nbsp;·&nbsp; Source: AVT Hazard Log V0.8 (provided by user)</div>
+      </div>
+      <button onclick="closeHazard()" style="flex-shrink:0;padding:4px 8px;font-size:12px;color:var(--color-text-tertiary)"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>
+    <div style="padding:1rem 1.25rem">
+      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--color-text-tertiary);margin-bottom:6px">Effect</div>
+      <div style="font-size:13px;color:var(--color-text-secondary);line-height:1.65;margin-bottom:1rem;padding:9px 12px;background:var(--color-background-danger);border-radius:var(--border-radius-md);color:var(--color-text-danger)" id="hm-effect"></div>
+      <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--color-text-tertiary);margin-bottom:6px">Possible causes</div>
+      <div id="hm-causes" style="display:flex;flex-direction:column;gap:4px"></div>
+      <div style="margin-top:1rem;padding:8px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);font-size:11px;color:var(--color-text-tertiary);line-height:1.5">
+        <i class="ti ti-info-circle" aria-hidden="true" style="font-size:12px;vertical-align:-2px;margin-right:4px"></i>
+        Hazard IDs and descriptions are reproduced from the <strong style="color:var(--color-text-secondary)">AVT Hazard Log V0.8</strong> provided by the user. This tool does not modify hazard content — refer to the source document for risk scores, controls, and residual risk assessments.
+      </div>
+    </div>
+  </div>
+</div>
+
 </div><!-- /page-wrapper -->
 
 <script>
 const BUCKETS={
-  "transcription-accuracy":{name:"Transcription Accuracy",icon:"ti-microphone",col:"#185FA5",bg:"var(--color-background-info)",definition:"Metrics that test the accuracy and safety of the audio capture and transcription pipeline — covering noise-induced hallucination, hardware validation, and demographic equity of ASR performance.",rationale:"Transcription is the foundation of the entire AVT pipeline. Errors introduced at this stage propagate into everything downstream. If the system cannot reliably convert speech to text in the deployment environment, no downstream quality metric can compensate."},
-  "clinical-summarisation":{name:"Clinical Summarisation",icon:"ti-report-medical",col:"#6B2D8B",bg:"#F3EAFA",definition:"Metrics that test the clinical accuracy and safety of the summarisation and NLP layer — covering hallucinations, omissions, negation errors, uncertainty inflation, numeric accuracy, code hallucination, and PRSB completeness.",rationale:"This is where clinically significant errors are most likely to arise and least likely to be visible. Summarisation failures directly affect the accuracy of the permanent clinical record and every decision made from it."},
-  "epr-writeback":{name:"EPR Write-back & Integration Integrity",icon:"ti-database-import",col:"#0F6E56",bg:"var(--color-background-success)",definition:"Metrics that test whether content is correctly transmitted from the AVT system into the EPR — covering write-back fidelity, field mapping accuracy, update vs append behaviour, integration error rates, and AI content labelling compliance.",rationale:"AVT systems write to structured EPR fields including safety-critical ones. An error here is invisible to the clinician and propagates to future clinical decision for that patient."},
-  "human-oversight":{name:"Human oversight & automation bias",icon:"ti-eye",col:"#534AB7",bg:"#EEEDFE",definition:"Metrics that monitor whether clinicians are genuinely reviewing and correcting AI-generated notes before signing — covering edit rates, review rates, signing speed, and adoption patterns.",rationale:"The greatest systemic risk is not a single bad note but clinicians rubber-stamping outputs at scale. These metrics are the primary early warning system for automation bias."},
-  "privacy-data":{name:"Privacy & data governance",icon:"ti-lock",col:"#0F6E56",bg:"var(--color-background-success)",definition:"Metrics covering compliance with UK GDPR, Caldicott, and NHSE IG guidance — including DPIA completion, audio deletion, consent recording, SAR and erasure workflows, and sub-processor transparency.",rationale:"These are legal obligations, not governance recommendations. Non-compliance is a regulatory breach."},
-  "governance-safety":{name:"Governance & safety management",icon:"ti-shield-check",col:"#3B6D11",bg:"var(--color-background-success)",definition:"Metrics covering the governance infrastructure that converts safety signals into organisational response — including safety performance indicators, hazard logs, clinical safety cases, incident reporting, and vendor management.",rationale:"Individual metrics are only useful if connected to a mechanism that responds to them. Without thresholds, escalation paths, and named owners, a metric dashboard is information without teeth."},
-  "procurement-equity":{name:"Procurement, equity & enablement",icon:"ti-world",col:"#993C1D",bg:"var(--color-background-danger)",definition:"Metrics covering procurement compliance, clinician training, equitable deployment, patient opt-out, and vendor transparency — the conditions under which the deployment operates within legal and ethical bounds.",rationale:"These metrics define whether the deployment is authorised, equitable, and beneficial."}
+  "transcription-accuracy":{name:"Transcription Accuracy",icon:"ti-microphone",col:"#185FA5",bg:"var(--color-background-info)",definition:"Metrics that test the accuracy and safety of the audio capture and transcription pipeline — covering noise-induced hallucination, hardware validation, and demographic equity of ASR performance.",rationale:"Transcription is the foundation of the entire AVT pipeline. Errors introduced at this stage propagate into everything downstream. If the system cannot reliably convert speech to text in the deployment environment, no downstream quality metric can compensate.",hazards:["AVT01"]},
+  "clinical-summarisation":{name:"Clinical Summarisation",icon:"ti-report-medical",col:"#6B2D8B",bg:"#F3EAFA",definition:"Metrics that test the clinical accuracy and safety of the summarisation and NLP layer — covering hallucinations, omissions, negation errors, uncertainty inflation, numeric accuracy, code hallucination, and PRSB completeness.",rationale:"This is where clinically significant errors are most likely to arise and least likely to be visible. Summarisation failures directly affect the accuracy of the permanent clinical record and every decision made from it.",hazards:["AVT01","AVT05","AVT08"]},
+  "epr-writeback":{name:"EPR Write-back & Integration Integrity",icon:"ti-database-import",col:"#0F6E56",bg:"var(--color-background-success)",definition:"Metrics that test whether content is correctly transmitted from the AVT system into the EPR — covering write-back fidelity, field mapping accuracy, update vs append behaviour, integration error rates, and AI content labelling compliance.",rationale:"AVT systems write to structured EPR fields including safety-critical ones. An error here is invisible to the clinician and propagates to every future clinical decision for that patient — including prescribing safety checks, allergy alerts, and handover.",hazards:["AVT02","AVT03"]},
+  "human-oversight":{name:"Human oversight & automation bias",icon:"ti-eye",col:"#534AB7",bg:"#EEEDFE",definition:"Metrics that monitor whether clinicians are genuinely reviewing and correcting AI-generated notes before signing — covering edit rates, review rates, signing speed, and adoption patterns.",rationale:"The greatest systemic risk is not a single bad note but clinicians rubber-stamping outputs at scale. These metrics are the primary early warning system for automation bias.",hazards:["AVT05","AVT07"]},
+  "privacy-data":{name:"Privacy & data governance",icon:"ti-lock",col:"#0F6E56",bg:"var(--color-background-success)",definition:"Metrics covering compliance with UK GDPR, Caldicott, and NHSE IG guidance — including DPIA completion, audio deletion, consent recording, SAR and erasure workflows, and sub-processor transparency.",rationale:"These are legal obligations, not governance recommendations. Non-compliance is a regulatory breach.",hazards:["AVT04","AVT06","AVT09"]},
+  "governance-safety":{name:"Governance & safety management",icon:"ti-shield-check",col:"#3B6D11",bg:"var(--color-background-success)",definition:"Metrics covering the governance infrastructure that converts safety signals into action — including safety performance indicators, hazard logs, clinical safety cases, incident reporting, and vendor management.",rationale:"Individual metrics are only useful if connected to a mechanism that responds to them. Without thresholds, escalation paths, and named owners, a metric dashboard is information without teeth.",hazards:["AVT07"]},
+  "procurement-equity":{name:"Procurement, equity & enablement",icon:"ti-world",col:"#993C1D",bg:"var(--color-background-danger)",definition:"Metrics covering procurement compliance, clinician training, equitable deployment, patient opt-out, and vendor transparency — the conditions under which the deployment operates within legal and ethical bounds.",rationale:"These metrics define whether the deployment is authorised, equitable, and beneficial.",hazards:["AVT06","AVT07"]}
 };
 
 const BC={"transcription-accuracy":"#378ADD","clinical-summarisation":"#6B2D8B","epr-writeback":"#0F6E56","human-oversight":"#7F77DD","privacy-data":"#1D9E75","governance-safety":"#639922","procurement-equity":"#D85A30"};
+
+const HAZARDS={
+  "AVT01":{
+    title:"Clinical documentation inaccuracies leading to delay in clinical action",
+    date:"19.12.2025",
+    effect:"Clinical action is compromised. Misinterpretation of clinical voice input by the AVT. Incorrect, omitted, or delayed clinical actions. Safety netting inappropriately documented. Under-reporting of safeguarding, frailty and factors affecting vulnerable patients, documentation of identifiable information where a flag would apply.",
+    causes:[
+      "AVT01.01: Transcription and audio deleted — unable to verify",
+      "AVT01.02: Misinterpretation of audio inputs (false positives, false negatives, null responses)",
+      "AVT01.03: Bias and incomplete representation in training/test data",
+      "AVT01.04: Live data drift (sudden or gradual)",
+      "AVT01.05: System unavailability or slow response",
+      "AVT01.06: Training and testing data lacks representation of diverse user cohorts (accents, dialects, speech impairments)",
+      "AVT01.07: LLM-assisted AVT inconsistently interprets or post-processes speech from specific user cohorts",
+      "AVT01.08: LLM-assisted AVT produces incorrect or incomplete clinical transcription when acoustic conditions are suboptimal",
+      "AVT01.09: LLM-assisted AVT corrupts, invents, or omits clinically significant details (e.g. drug names, dosages, allergies)",
+      "AVT01.10: LLM not sufficiently trained in clinical terminology — misinterprets clinical terms as non-clinical",
+      "AVT01.11: Hallucination / fabrication: key data missing from source but retrieval process generates fictional data",
+      "AVT01.12: Non-English voice input inaccurately translated by AVT or its language model",
+      "AVT01.13: Human editing errors",
+      "AVT01.14: Insufficient hardware access locally",
+      "AVT01.15: Subtle verbal and non-verbal cues for safeguarding and frailty not captured; examination findings inappropriately captured",
+      "AVT01.16: Missed information misinterpreted as non-medical (e.g. occupation, living situation)",
+    ]
+  },
+  "AVT02":{
+    title:"Critical patient information not uploaded to the EPR in time due to AVT–EPR integration failure",
+    date:"19.12.2025",
+    effect:"Prevents timely upload of transcribed clinical data.",
+    causes:[
+      "AVT02.01: Incorrect or incomplete API mapping between AVT and EPR (mismatched fields, schema incompatibility)",
+      "AVT02.02: Poor or unstable network connectivity between AVT software and EPR systems",
+    ]
+  },
+  "AVT03":{
+    title:"Critical patient information uploaded to the wrong EPR record due to AVT misinterpretation or integration error",
+    date:"19.12.2025",
+    effect:"Resulting in mismatched meaning and incorrect patient association.",
+    causes:[
+      "AVT03.01: Incorrect or incomplete API mapping between AVT and EPR (mismatched fields, schema incompatibility)",
+      "AVT03.02: Mistranslation of non-English voice input leads to incorrect patient attribution",
+    ]
+  },
+  "AVT04":{
+    title:"Sensitive patient data (PID) exposed to third-party LLMs or appears in output",
+    date:"19.12.2025",
+    effect:"Patient data lost or accessed inadvertently.",
+    causes:[
+      "AVT04.01: Sensitive data not redacted before sending to the LLM",
+      "AVT04.02: Malicious prompts trick the system into revealing private data (prompt injection overriding safety constraints)",
+      "AVT04.03: Weak access controls — over-permissive API keys or roles allow unauthorised access",
+      "AVT04.04: LLM vendor keeps sensitive data for training or analytics",
+      "AVT04.05: APIs or endpoints vulnerable to attacks (scraping, injection)",
+    ]
+  },
+  "AVT05":{
+    title:"Clinicians required to review excessively long, unstructured transcripts generated by AVT",
+    date:"19.12.2025",
+    effect:"Leading to increased time for patient reviews and administrative tasks.",
+    causes:[
+      "AVT05.01: AVT retrieves entire documents or broad time windows rather than scoped, relevant sections",
+      "AVT05.02: Free-text dumps with no hierarchy (e.g. key findings → evidence → uncertainties)",
+      "AVT05.03: AVT generates duplicated entries",
+      "AVT05.04: Hallucination and irrelevant content — model adds fabricated details triggering manual verification",
+    ]
+  },
+  "AVT06":{
+    title:"Patient may choose to refrain from accessing care due to discomfort, lack of trust, or perceived barriers related to AVT use",
+    date:"19.12.2025",
+    effect:"Patients avoiding care leads to delayed presentation and worse clinical outcomes.",
+    causes:[
+      "AVT06.01: Vulnerable patients may avoid seeking healthcare where AVT is in use",
+    ]
+  },
+  "AVT07":{
+    title:"Healthcare professionals use AVT for purposes outside of intended use",
+    date:"01.03.2026",
+    effect:"Use outside validated scope increases risk of harm from inappropriate outputs.",
+    causes:[
+      "AVT07.01: Prompt injection for clinical decision support",
+      "AVT07.02: Use in settings or consultation types not validated (e.g. complex, multispeciality, group consultations); use by untrained staff",
+      "AVT07.03: Inappropriate use with add-on features such as triaging",
+    ]
+  },
+  "AVT08":{
+    title:"Inaccuracies within patient-facing documentation",
+    date:"04.03.2026",
+    effect:"Patient anxiety or annoyance at inappropriate documentation; complaint submission.",
+    causes:[
+      "AVT08.01: Documentation errors directly transcribed to patient-facing pages",
+      "AVT08.02: Impersonal patient-facing documentation may impact patient relationship with the healthcare team",
+    ]
+  },
+  "AVT09":{
+    title:"Safeguarding information inappropriately shared",
+    date:"04.03.2026",
+    effect:"Breach of confidentiality; risk of harm to vulnerable individuals.",
+    causes:[
+      "AVT09.01: Safeguarding notes within consultation recorded and inputted inappropriately, breaking confidentiality",
+    ]
+  },
+};
 const CAL_LABEL={confirm:"Confirm Tier 1",strengthen:"Strengthen for this context",promote:"Promote Tier 2 → Tier 1",demote:"Consider demotion — document reason"};
 const PHASE_LABELS={gate:"Day-zero gate",day1:"Day-one monitoring",day30:"Day-30 operational",day90:"Day-90 full coverage"};
 const PHASE_BADGE={gate:"bd",day1:"bi",day30:"bw",day90:"bs"};
@@ -610,6 +760,9 @@ function renderBuckets(){
       const conf=isBucketConfirmed(m);
       return '<span class="mchip'+(moved?' mchip-moved':'')+(conf?' mchip-confirmed':'')+'" onclick="jumpToMetric('+m.id+')" title="'+m.name+(moved?' (reassigned)':'')+(conf?' ✓':'')+'">'+m.ref+'</span>';
     }).join('');
+    const hazardBadges=(b.hazards||[]).map(h=>
+      '<span onclick="showHazard(\''+h+'\')" title="Click for detail: '+HAZARDS[h].title+'" style="display:inline-flex;align-items:center;gap:3px;font-size:11px;padding:2px 8px;border-radius:3px;background:var(--color-background-danger);color:var(--color-text-danger);border:.5px solid var(--color-border-danger);cursor:pointer;font-weight:500">'+h+' <i class=\'ti ti-external-link\' style=\'font-size:10px\'></i></span>'
+    ).join('');
     return '<div class="bc">'
       +'<div class="bc-hdr">'
         +'<div class="bc-icon" style="background:'+b.bg+'"><i class="ti '+b.icon+'" aria-hidden="true" style="font-size:16px;color:'+b.col+'"></i></div>'
@@ -622,6 +775,8 @@ function renderBuckets(){
         +'</div>'
       +'</div>'
       +'<div class="bc-body">'
+        +(hazardBadges?'<div class="field-label">Related clinical hazards</div>'
+          +'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">'+hazardBadges+'</div>':'')
         +'<div class="field-label">Definition</div>'
         +'<div class="field-display" id="dd-'+k+'">'+def.definition+'</div>'
         +'<textarea class="field-edit" id="de-'+k+'">'+def.definition+'</textarea>'
@@ -939,6 +1094,28 @@ function showSyncStatus(state) {
   clearTimeout(el._timer);
   el._timer = setTimeout(() => { el.textContent = ''; }, 3000);
 }
+
+// ── Hazard modal ──────────────────────────────────────────
+function showHazard(id){
+  const h=HAZARDS[id];
+  if(!h)return;
+  document.getElementById('hm-id').textContent=id;
+  document.getElementById('hm-title').textContent=h.title;
+  document.getElementById('hm-date').textContent=h.date;
+  document.getElementById('hm-effect').textContent=h.effect;
+  document.getElementById('hm-causes').innerHTML=h.causes.map(c=>
+    '<div style="font-size:12px;color:var(--color-text-secondary);line-height:1.55;padding:6px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">'+c+'</div>'
+  ).join('');
+  const modal=document.getElementById('hazard-modal');
+  modal.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closeHazard(e){
+  if(e&&e.target!==document.getElementById('hazard-modal')&&e.type==='click')return;
+  document.getElementById('hazard-modal').style.display='none';
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeHazard();});
 
 // ── Init ──────────────────────────────────────────────────
 const restored = loadFromStorage();
