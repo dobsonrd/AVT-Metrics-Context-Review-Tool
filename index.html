@@ -216,7 +216,7 @@ button:active{transform:scale(0.98)}
 <div style="background:var(--color-background-warning);border-bottom:.5px solid var(--color-border-warning);padding:10px 1.5rem;display:flex;align-items:flex-start;gap:10px">
   <i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:15px;color:var(--color-text-warning);flex-shrink:0;margin-top:1px"></i>
   <div style="font-size:12px;color:var(--color-text-warning);line-height:1.65">
-    <strong>This site has been drafted with AI assistance and human-reviewed.</strong> Keep this front of mind and please flag anything that looks wrong — feedback on errors is welcome. This is shared to support conversation, not as a settled standard.
+    <strong>This site has been drafted with AI assistance and human-reviewed.</strong> Keep this front of mind and please flag anything that looks wrong — feedback on errors is welcome. This is shared to support conversation around AI assurance, this is not NHS-endorsed. Tier 1 metrics sourced from the <a href="https://danjscho.github.io/avt-metrics-taxonomy/latest/tier-1-quick-reference/" target="_blank" style="color:var(--color-text-warning);font-weight:500">Prototype AVT Metrics Taxonomy — Quick start (Tier 1)</a>.
     <span onclick="switchTop('history',document.querySelectorAll('.top-tab')[3])" style="cursor:pointer;text-decoration:underline;text-underline-offset:2px;margin-left:4px">See the version &amp; history page for recent changes.</span>
   </div>
 </div>
@@ -231,7 +231,7 @@ button:active{transform:scale(0.98)}
   </div>
   <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
     <span id="sync-status" style="font-size:11px;transition:color .3s"></span>
-    <span style="font-size:11px;color:var(--color-text-tertiary)">v2.1</span>
+    <span style="font-size:11px;color:var(--color-text-tertiary)">v2.3</span>
     <button onclick="clearStorage()" style="font-size:11px;padding:3px 10px;color:var(--color-text-tertiary);border-color:var(--color-border-tertiary)" title="Clear all saved decisions and reset"><i class="ti ti-trash" aria-hidden="true"></i> Reset</button>
     <div class="page-header-badge"><i class="ti ti-building-hospital" aria-hidden="true"></i> Acute outpatients &amp; ED</div>
   </div>
@@ -241,7 +241,7 @@ button:active{transform:scale(0.98)}
 
 <div class="top-nav">
   <div class="top-tab active" onclick="switchTop('buckets',this)"><i class="ti ti-packages" aria-hidden="true"></i> Buckets</div>
-  <div class="top-tab" onclick="switchTop('review',this)"><i class="ti ti-clipboard-list" aria-hidden="true"></i> Metric review</div>
+  <div class="top-tab" onclick="switchTop('review',this)"><i class="ti ti-list" aria-hidden="true"></i> Metrics</div>
   <div class="top-tab" onclick="switchTop('export',this)"><i class="ti ti-download" aria-hidden="true"></i> Export</div>
   <div class="top-tab" onclick="switchTop('history',this)"><i class="ti ti-history" aria-hidden="true"></i> Version &amp; history</div>
 </div>
@@ -253,61 +253,40 @@ button:active{transform:scale(0.98)}
   <div class="bucket-grid" id="bucket-grid"></div>
 </div>
 
-<div id="view-review" class="view view-review">
-  <div class="context-banner"><i class="ti ti-building-hospital" aria-hidden="true" style="font-size:13px;vertical-align:-2px;margin-right:4px"></i><strong>Deployment context: Acute outpatients &amp; Emergency Department.</strong> Each metric includes a suggested tier calibration for this context. Review, override, and document your reasoning in the decision fields.</div>
-  <div class="cal-legend">
-    <div class="cal-key"><span style="width:8px;height:8px;border-radius:50%;background:#1D9E75;flex-shrink:0;display:inline-block"></span>Confirm Tier 1</div>
-    <div class="cal-key"><span style="width:8px;height:8px;border-radius:50%;background:#BA7517;flex-shrink:0;display:inline-block"></span>Strengthen (tighten threshold/cadence)</div>
-    <div class="cal-key"><span style="width:8px;height:8px;border-radius:50%;background:#185FA5;flex-shrink:0;display:inline-block"></span>Promote (Tier 2 → Tier 1 for this context)</div>
-    <div class="cal-key"><span style="width:8px;height:8px;border-radius:50%;background:#888780;flex-shrink:0;display:inline-block"></span>Justify demotion (rare — document reason)</div>
-  </div>
+<div id="view-review" class="view vr">
   <div class="toolbar-row">
     <input type="text" id="s-search" placeholder="Search metrics..." oninput="filterList()">
     <select id="s-bucket" onchange="filterList()">
       <option value="">All buckets</option>
-      <option value="transcription-accuracy">Clinical content safety</option>
-      <option value="clinical-summarisation">Numeric &amp; coding accuracy</option>
-      <option value="epr-writeback">Write-back &amp; integration</option>
+      <option value="transcription-accuracy">Transcription Accuracy</option>
+      <option value="clinical-summarisation">Clinical Summarisation</option>
+      <option value="epr-writeback">EPR Write-back &amp; Integration Integrity</option>
       <option value="human-oversight">Human oversight</option>
       <option value="privacy-data">Privacy &amp; data governance</option>
-      <option value="governance-safety">Governance &amp; safety mgmt</option>
+      <option value="governance-safety">Governance &amp; safety management</option>
       <option value="procurement-equity">Procurement, equity &amp; enablement</option>
     </select>
-    <select id="s-phase" onchange="filterList()">
-      <option value="">All phases</option>
-      <option value="gate">Day-zero gate</option>
-      <option value="day1">Day-one monitoring</option>
-      <option value="day30">Day-30 operational</option>
-      <option value="day90">Day-90 full coverage</option>
-    </select>
-    <select id="s-cal" onchange="filterList()">
-      <option value="">All calibrations</option>
-      <option value="confirm">Confirm Tier 1</option>
-      <option value="strengthen">Strengthen</option>
-      <option value="promote">Promote</option>
-      <option value="demote">Justify demotion</option>
-    </select>
-    <select id="s-status" onchange="filterList()">
-      <option value="">All statuses</option>
-      <option value="pending">Not reviewed</option>
-      <option value="done">Reviewed</option>
-      <option value="flagged">Flagged</option>
+    <select id="s-cadence" onchange="filterList()">
+      <option value="">All cadences</option>
+      <option value="gate">🚪 Pre-deployment gate</option>
+      <option value="cont">📡 Continuous in-service signal</option>
+      <option value="periodic">🔄 Periodic content audit</option>
     </select>
   </div>
-  <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-  <div class="prog-lbl" id="prog-lbl">0 of 58 reviewed</div>
+  <div style="font-size:11px;color:var(--color-text-tertiary);padding:4px 1.25rem;border-bottom:.5px solid var(--color-border-tertiary)">58 Tier 1 metrics — click any metric to see detail and bucket rationale</div>
   <div class="review-layout">
     <div class="list-panel" id="list-panel"></div>
-    <div class="detail-pane" id="detail-pane"><div class="empty-state"><i class="ti ti-arrow-left" aria-hidden="true" style="font-size:18px;display:block;margin-bottom:6px"></i>Select a metric to begin review</div></div>
+    <div class="detail-pane" id="detail-pane"><div class="empty-state"><i class="ti ti-arrow-left" aria-hidden="true" style="font-size:18px;display:block;margin-bottom:6px"></i>Select a metric to see detail</div></div>
   </div>
 </div>
 
 <div id="view-export" class="view">
   <div class="exp-pane">
-    <div style="font-size:14px;font-weight:500;margin-bottom:1rem">Workshop decisions log — Acute outpatients &amp; ED</div>
+    <div style="font-size:14px;font-weight:500;margin-bottom:.25rem">Bucket definitions &amp; metric assignments</div>
+    <div style="font-size:12px;color:var(--color-text-tertiary);margin-bottom:1rem">Acute outpatients &amp; ED · AVT Tier 1 Metrics</div>
     <div class="exp-preview" id="exp-preview"></div>
     <div style="display:flex;gap:8px;margin-top:12px">
-      <button class="btn-done" onclick="downloadExport()"><i class="ti ti-download" aria-hidden="true"></i> Download .txt</button>
+      <button style="background:var(--color-background-info);color:var(--color-text-info);border-color:var(--color-border-info)" onclick="downloadExport()"><i class="ti ti-download" aria-hidden="true"></i> Download .txt</button>
       <button onclick="copyExport()"><i class="ti ti-copy" aria-hidden="true"></i> Copy</button>
     </div>
   </div>
@@ -323,13 +302,37 @@ button:active{transform:scale(0.98)}
 
       <div style="display:grid;grid-template-columns:90px 1fr;gap:0;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:10px">
         <div style="background:var(--color-background-info);padding:14px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-right:.5px solid var(--color-border-info)">
-          <div style="font-size:13px;font-weight:600;color:var(--color-text-info)">v2.1</div>
+          <div style="font-size:13px;font-weight:600;color:var(--color-text-info)">v2.3</div>
           <div style="font-size:10px;color:var(--color-text-info);margin-top:2px">Current</div>
+        </div>
+        <div style="padding:12px 16px;background:var(--color-background-primary)">
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Cadence labels aligned to taxonomy source wording</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">
+            Cadence labels updated throughout to match the original taxonomy terminology: <strong>Pre-deployment gate</strong>, <strong>Continuous in-service signal</strong>, and <strong>Periodic content audit</strong> — matching the 🚪 / 📡 / 🔄 icons and descriptions used in the AVT Metrics Taxonomy quick reference. Updated in metric detail badges, the cadence filter dropdown, and the <code style="font-family:var(--font-mono);font-size:11px">CADENCE_LABEL</code> lookup used throughout.
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:90px 1fr;gap:0;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:10px">
+        <div style="background:var(--color-background-secondary);padding:14px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-right:.5px solid var(--color-border-tertiary)">
+          <div style="font-size:13px;font-weight:600;color:var(--color-text-secondary)">v2.2</div>
+        </div>
+        <div style="padding:12px 16px;background:var(--color-background-primary)">
+          <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Metrics tab — reference view replacing workshop review</div>
+          <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">
+            The <em>Metric review</em> tab replaced with a simplified <em>Metrics</em> tab. The tool is no longer a metric-by-metric review instrument. The 58 metrics are presented as a filterable reference list. Each metric's detail view focuses on what the metric assures, its risk narrative and harm pathway, and a bucket rationale explaining why it sits in its assigned bucket. Decision capture fields and progress tracking removed. Bucket confirmation and reassignment retained. Export tab now outputs bucket definitions and metric assignments.
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:90px 1fr;gap:0;border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:10px">
+        <div style="background:var(--color-background-secondary);padding:14px 12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-right:.5px solid var(--color-border-tertiary)">
+          <div style="font-size:13px;font-weight:600;color:var(--color-text-secondary)">v2.1</div>
         </div>
         <div style="padding:12px 16px;background:var(--color-background-primary)">
           <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px">Hazard detail click-through · Source attribution</div>
           <div style="font-size:12px;color:var(--color-text-secondary);line-height:1.7">
-            Hazard badges on bucket cards are now clickable and open a modal showing the full hazard detail — title, date added, effect, and all possible causes — reproduced from the <strong>AVT Hazard Log V0.8</strong> provided by the user. Each modal carries a source attribution note making clear that hazard content originates from the user-provided document and that risk scores, controls, and residual risk assessments should be referenced there. The buckets tab intro text updated to reference the hazard log. Escape key and clicking outside the modal both close it.
+            Hazard badges on bucket cards are now clickable and open a modal showing the full hazard detail — title, date added, effect, and all possible causes — reproduced from the <strong>AVT Hazard Log V0.8</strong> provided by the user. Each modal carries a source attribution note. The buckets tab intro text updated to reference the hazard log. Escape key and clicking outside the modal both close it.
           </div>
         </div>
       </div>
@@ -619,7 +622,7 @@ const HAZARDS={
 const CAL_LABEL={confirm:"Confirm Tier 1",strengthen:"Strengthen for this context",promote:"Promote Tier 2 → Tier 1",demote:"Consider demotion — document reason"};
 const PHASE_LABELS={gate:"Day-zero gate",day1:"Day-one monitoring",day30:"Day-30 operational",day90:"Day-90 full coverage"};
 const PHASE_BADGE={gate:"bd",day1:"bi",day30:"bw",day90:"bs"};
-const CADENCE_LABEL={gate:"🚪 Gate",cont:"📡 Continuous",periodic:"🔄 Periodic"};
+const CADENCE_LABEL={gate:"🚪 Pre-deployment gate",cont:"📡 Continuous in-service signal",periodic:"🔄 Periodic content audit"};
 const CADENCE_BADGE={gate:"bd",cont:"bi",periodic:"bw"};
 const LAYER_BADGE={Prevention:"bd",Detection:"bw",Limitation:"bn"};
 const MATURITY_BADGE={Established:"bs",Emerging:"bw"};
@@ -808,137 +811,116 @@ function jumpToMetric(id){
   setTimeout(()=>{const el=document.querySelector(".li.active");if(el)el.scrollIntoView({block:"nearest"});},100);
 }
 function filterList(){
-  const q=(document.getElementById("s-search").value||"").toLowerCase();
-  const b=document.getElementById("s-bucket").value,p=document.getElementById("s-phase").value,c=document.getElementById("s-cal").value,s=document.getElementById("s-status").value;
+  const q=(document.getElementById('s-search').value||'').toLowerCase();
+  const b=document.getElementById('s-bucket').value;
+  const cad=document.getElementById('s-cadence')?document.getElementById('s-cadence').value:'';
   filteredIds=METRICS.filter(m=>{
     if(q&&!m.name.toLowerCase().includes(q)&&!m.ref.toLowerCase().includes(q))return false;
-    if(b&&m.bucket!==b)return false;if(p&&m.phase!==p)return false;
-    if(c&&getEffectiveCal(m)!==c)return false;if(s&&getStatus(m.id)!==s)return false;
+    if(b&&getEffectiveBucket(m)!==b)return false;
+    if(cad&&m.cadence!==cad)return false;
     return true;
-  }).map(m=>m.id);renderList();
+  }).map(m=>m.id);
+  renderList();
 }
+
 function renderList(){
-  const panel=document.getElementById("list-panel");
+  const panel=document.getElementById('list-panel');
   if(!filteredIds.length){panel.innerHTML='<div class="empty-state">No metrics match filters</div>';return;}
   panel.innerHTML=filteredIds.map(id=>{
-    const m=METRICS.find(x=>x.id===id),st=getStatus(id),isActive=activeId===id,eCal=getEffectiveCal(m);
-    const eb=getEffectiveBucket(m),moved=eb!==m.bucket,conf=isBucketConfirmed(m);
-    return `<div class="li${isActive?" active":""}" onclick="selectMetric(${id})">
-      <span class="li-num">${String(m.id).padStart(2,"0")}</span>
-      <span class="bpip" style="background:${BC[eb]};${moved?"outline:2px solid "+BC[eb]+";outline-offset:1px;":""}" title="${moved?"Reassigned to "+BUCKETS[eb].name:BUCKETS[eb].name}"></span>
-      <span class="li-name${isActive?" at":""}">${m.name}</span>
-      ${conf?'<span style="font-size:9px;color:var(--color-text-success);flex-shrink:0" title="Bucket confirmed">✓</span>':''}
-      <span class="badge ${CAL_BADGE_CLASS[eCal]}" style="font-size:9px;padding:1px 4px;flex-shrink:0">${eCal==="confirm"?"✓":eCal==="strengthen"?"↑":eCal==="promote"?"→":"↓"}</span>
-      <span class="sdot ${st}"></span>
-    </div>`;
-  }).join("");
-  updateProgress();
+    const m=METRICS.find(x=>x.id===id),isActive=activeId===id;
+    const eb=getEffectiveBucket(m),col=BC[eb];
+    const bucketName=BUCKETS[eb]?BUCKETS[eb].name:eb;
+    return '<div class="li'+(isActive?' active':'')+'" onclick="selectMetric('+id+')">'
+      +'<span class="li-num">'+m.ref+'</span>'
+      +'<span class="bpip" style="background:'+col+';flex-shrink:0" title="'+bucketName+'"></span>'
+      +'<span class="li-name'+(isActive?' at':'')+'">'+m.name+'</span>'
+      +'</div>';
+  }).join('');
 }
-function statusButtons(id){
-  var st=getStatus(id);
-  var undo='<button onclick="clearStatus('+id+')" style="color:var(--color-text-tertiary);border-color:var(--color-border-tertiary)"><i class="ti ti-rotate-clockwise" aria-hidden="true"></i> Undo</button>';
-  var btnDone='<button class="btn-done" onclick="markDone('+id+')"><i class="ti ti-check" aria-hidden="true"></i> Reviewed</button>';
-  var btnDoneDim='<button class="btn-done" disabled style="opacity:.45;cursor:default"><i class="ti ti-check" aria-hidden="true"></i> Reviewed</button>';
-  var btnFlag='<button class="btn-flag" onclick="markFlagged('+id+')"><i class="ti ti-flag" aria-hidden="true"></i> Flagged</button>';
-  var btnFlagDim='<button class="btn-flag" disabled style="opacity:.45;cursor:default"><i class="ti ti-flag" aria-hidden="true"></i> Flagged</button>';
-  var btnFlagAlt='<button class="btn-flag" onclick="markFlagged('+id+')"><i class="ti ti-flag" aria-hidden="true"></i> Flag instead</button>';
-  var btnDoneAlt='<button class="btn-done" onclick="markDone('+id+')"><i class="ti ti-check" aria-hidden="true"></i> Mark reviewed</button>';
-  if(st==='done')    return btnDoneDim+' '+btnFlagAlt+' '+undo;
-  if(st==='flagged') return btnDoneAlt+' '+btnFlagDim+' '+undo;
-  return btnDone+' '+btnFlag;
-}
+
 function selectMetric(id){
   if (activeId !== id) pushHistory({type:'metric', metricId:activeId});
   activeId=id;renderList();renderDetail(id);
 }
 function renderDetail(id){
-  const m=METRICS.find(x=>x.id===id),d=decisions[id]||{},eCal=getEffectiveCal(m);
-  document.getElementById("detail-pane").innerHTML=`
-    <a class="docs-link" href="https://danjscho.github.io/avt-metrics-taxonomy/" target="_blank"><i class="ti ti-external-link" aria-hidden="true" style="font-size:11px"></i> View on taxonomy docs site</a>
-    <div class="d-title">${m.name}</div>
-    <div class="badge-row">
-      <span class="badge bn" style="font-family:var(--font-mono);font-size:10px">${m.ref}</span>
-      <span class="badge ${PHASE_BADGE[m.phase]}">${PHASE_LABELS[m.phase]}</span>
-      <span class="badge ${CADENCE_BADGE[m.cadence]}">${CADENCE_LABEL[m.cadence]}</span>
-      <span class="badge ${LAYER_BADGE[m.layer]}">${m.layer}</span>
-      <span class="badge ${MATURITY_BADGE[m.maturity]||'bn'}">${m.maturity}</span>
-    </div>
-    <div style="font-size:11px;color:var(--color-text-secondary);padding:5px 9px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);margin-bottom:1rem;display:flex;align-items:center;gap:6px">
-      <span class="bpip" style="background:${BC[getEffectiveBucket(m)]}"></span>
-      ${getEffectiveBucket(m)!==m.bucket
-        ? '<span style="color:var(--color-text-warning)">Reassigned: '+BUCKETS[getEffectiveBucket(m)].name+'</span><span style="color:var(--color-text-tertiary)">(was: '+BUCKETS[m.bucket].name+')</span>'
-        : BUCKETS[m.bucket].name}
-      &nbsp;&middot;&nbsp; ${m.actor}
-    </div>
-    <div class="sh">Context calibration &mdash; acute outpatients &amp; ED</div>
-    <div class="cal-box ${eCal}">
-      <div class="cal-verdict ${eCal}">${CAL_LABEL[eCal]}${d.calOverride?" (overridden by group)":""}</div>
-      <div class="cal-rationale ${eCal}">${m.calNote}</div>
-    </div>
-    <div class="sh">Risk narrative</div>
-    <div class="risk-block">${m.risk}</div>
-    <div class="sh">Harm pathway</div>
-    <div class="harm-chain">${m.harm.map((h,i)=>`<span class="cs">${h}</span>${i<m.harm.length-1?'<span class="ca">&rarr;</span>':""}`).join("")}</div>
-    <div class="sh">Assurance question</div>
-    <div class="aq">${m.assuranceQ}</div>
-    <div class="attr-grid">
-      <div class="ac"><div class="al">Measurement method</div><div class="av">${m.method}</div></div>
-      <div class="ac"><div class="al">Trigger conditions</div><div class="av">${m.trigger}</div></div>
-    </div>
-    <div class="phase-note"><i class="ti ti-clock" aria-hidden="true" style="font-size:11px;vertical-align:-2px;margin-right:4px"></i>${m.phase_note}</div>
-    <div class="dec-section">
-      <div class="sh">Workshop decisions</div>
-      <div class="dec-row" style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:12px">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
-          <label class="dec-label" style="margin:0;font-size:12px;font-weight:500;color:var(--color-text-primary)">Bucket assignment</label>
-          ${isBucketConfirmed(m)
-            ? '<span style="font-size:11px;color:var(--color-text-success);display:flex;align-items:center;gap:4px"><i class="ti ti-circle-check" aria-hidden="true"></i> Confirmed</span>'
-            : '<span style="font-size:11px;color:var(--color-text-warning);display:flex;align-items:center;gap:4px"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Not yet confirmed</span>'
-          }
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <select id="db-${id}" onchange="updateBucketOverride(${id})" style="flex:1;min-width:180px">
-            ${Object.entries(BUCKETS).map(([k,b])=>'<option value="'+k+'"'+(getEffectiveBucket(m)===k?' selected':'')+'>'+b.name+'</option>').join('')}
-          </select>
-          ${isBucketConfirmed(m)
-            ? '<button onclick="unconfirmBucket('+id+')" style="font-size:11px;padding:5px 10px;white-space:nowrap;color:var(--color-text-tertiary);border-color:var(--color-border-tertiary)"><i class="ti ti-x" aria-hidden="true"></i> Unconfirm</button>'
-            : '<button onclick="confirmBucket('+id+')" class="btn-done" style="font-size:11px;padding:5px 10px;white-space:nowrap"><i class="ti ti-circle-check" aria-hidden="true"></i> Confirm bucket</button>'
-          }
-        </div>
-        ${getEffectiveBucket(m)!==m.bucket
-          ? '<div style="margin-top:6px;font-size:11px;color:var(--color-text-warning)"><i class="ti ti-arrow-right" aria-hidden="true"></i> Moved from <strong>'+BUCKETS[m.bucket].name+'</strong> — buckets page will update automatically.</div>'
-          : ''
-        }
-      </div>
-      <div class="dec-row">
-        <label class="dec-label" for="dc-${id}">Tier calibration decision</label>
-        <select id="dc-${id}" onchange="updateCalOverride(${id})">
-          <option value="">Use suggested: ${CAL_LABEL[m.cal]}</option>
-          <option value="confirm"${d.calOverride==="confirm"?" selected":""}>Confirm Tier 1</option>
-          <option value="strengthen"${d.calOverride==="strengthen"?" selected":""}>Strengthen for this context</option>
-          <option value="promote"${d.calOverride==="promote"?" selected":""}>Promote Tier 2 &rarr; Tier 1</option>
-          <option value="demote"${d.calOverride==="demote"?" selected":""}>Justify demotion</option>
-        </select>
-      </div>
-      <div class="dec-row"><label class="dec-label" for="dcr-${id}">Calibration rationale (document why)</label><textarea id="dcr-${id}" placeholder="Why this calibration for acute outpatients/ED...">${d.calRationale||""}</textarea></div>
-      <div class="dec-row"><label class="dec-label" for="dm-${id}">Agreed measurement method / data source</label><textarea id="dm-${id}" placeholder="Record what was agreed...">${d.method||""}</textarea></div>
-      <div class="dec-row"><label class="dec-label" for="dt-${id}">Agreed threshold / trigger value</label><input type="text" id="dt-${id}" placeholder="e.g. &ge;1% review (tightened for ED)..." value="${d.threshold||""}"></div>
-      <div class="dec-row"><label class="dec-label" for="do-${id}">Named owner</label><input type="text" id="do-${id}" placeholder="Role or name..." value="${d.owner||""}"></div>
-      <div class="dec-row"><label class="dec-label" for="dn-${id}">Notes / parking lot</label><textarea id="dn-${id}" placeholder="Disagreements, deferred items...">${d.notes||""}</textarea></div>
-      <div class="btn-row">
-        ${statusButtons(id)}
-        <div class="nav-r">
-          <button onclick="navMetric(-1)" aria-label="Previous metric"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
-          <button onclick="navMetric(1)" aria-label="Next metric"><i class="ti ti-arrow-right" aria-hidden="true"></i></button>
-        </div>
-      </div>
-    </div>`;
+  const m=METRICS.find(x=>x.id===id);
+  const eb=getEffectiveBucket(m);
+  const bInfo=BUCKETS[eb];
+  const col=BC[eb];
+  const moved=eb!==m.bucket;
+  const conf=isBucketConfirmed(m);
+
+  // Bucket rationale — why this metric sits in this bucket
+  const bucketRationale={
+    'transcription-accuracy':'This metric measures the accuracy and reliability of the audio capture and speech-to-text layer, before any summarisation or clinical interpretation takes place. Errors here are foundational — they propagate into everything downstream.',
+    'clinical-summarisation':'This metric tests the clinical accuracy of the LLM summarisation layer — whether the model correctly captures, interprets, and structures clinical content from the transcript. This is where hallucination, omission, negation, and coding errors arise.',
+    'epr-writeback':'This metric tests what happens after summarisation — whether content is correctly transmitted into the EPR, to the right fields, without overwriting existing records, and with appropriate labelling.',
+    'human-oversight':'This metric monitors whether clinicians are genuinely engaging with and critically reviewing AVT output before it becomes a permanent record. It detects automation bias and rubber-stamping.',
+    'privacy-data':'This metric covers a legal or regulatory compliance obligation relating to data protection, patient consent, or information governance. Non-compliance is a regulatory breach regardless of clinical context.',
+    'governance-safety':'This metric measures whether the governance infrastructure supporting safe AVT deployment is in place and functioning — including safety cases, hazard logs, incident reporting, and vendor accountability.',
+    'procurement-equity':'This metric covers the conditions under which the deployment is authorised, equitable, and beneficial — including procurement compliance, vendor transparency, and equitable access across patient groups.',
+  };
+
+  document.getElementById('detail-pane').innerHTML=
+    '<a class="docs-link" href="https://danjscho.github.io/avt-metrics-taxonomy/latest/tier-1-quick-reference/" target="_blank"><i class="ti ti-external-link" aria-hidden="true" style="font-size:11px"></i> View Tier 1 quick reference on taxonomy docs site</a>'
+    +'<div class="d-title">'+m.name+'</div>'
+    +'<div class="badge-row">'
+      +'<span class="badge bn" style="font-family:var(--font-mono);font-size:10px">'+m.ref+'</span>'
+      +'<span class="badge '+(m.cadence==='gate'?'bd':m.cadence==='cont'?'bi':'bw')+'">'+CADENCE_LABEL[m.cadence]+'</span>'
+      +'<span class="badge bn">'+m.layer+'</span>'
+      +'<span class="badge '+(m.maturity==='Established'?'bs':'bw')+'">'+m.maturity+'</span>'
+    +'</div>'
+
+    // Bucket assignment
+    +'<div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;margin-bottom:1rem;border-left:3px solid '+col+'">'
+      +'<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px">'
+        +'<span class="bpip" style="background:'+col+';width:8px;height:8px;border-radius:50%;flex-shrink:0"></span>'
+        +'<span style="font-size:12px;font-weight:500;color:var(--color-text-primary)">'+bInfo.name+'</span>'
+        +(moved?'<span class="badge bw" style="font-size:9px">reassigned</span>':'')
+        +(conf?'<span class="badge bs" style="font-size:9px">✓ confirmed</span>':'')
+      +'</div>'
+      +'<div style="font-size:12px;color:var(--color-text-secondary);line-height:1.6">'+(bucketRationale[eb]||'')+'</div>'
+      +'<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">'
+        +(conf
+          ?'<button onclick="unconfirmBucket('+id+')" style="font-size:11px;padding:4px 10px;color:var(--color-text-tertiary);border-color:var(--color-border-tertiary)"><i class="ti ti-x" aria-hidden="true"></i> Unconfirm bucket</button>'
+          :'<button onclick="confirmBucket('+id+')" style="font-size:11px;padding:4px 10px;background:var(--color-background-success);color:var(--color-text-success);border-color:var(--color-border-success)"><i class="ti ti-circle-check" aria-hidden="true"></i> Confirm bucket</button>')
+        +'<select onchange="updateBucketOverride('+id+',this.value)" style="font-size:11px;padding:4px 8px;width:auto">'
+          +'<option value="">Move to different bucket…</option>'
+          +Object.entries(BUCKETS).map(([k,b])=>'<option value="'+k+'"'+(eb===k?' selected':'')+'>'+b.name+'</option>').join('')
+        +'</select>'
+      +'</div>'
+    +'</div>'
+
+    // Assurance question
+    +'<div class="sh">What this metric assures</div>'
+    +'<div class="aq">'+m.assuranceQ+'</div>'
+
+    // Risk narrative
+    +'<div class="sh">Risk narrative</div>'
+    +'<div class="risk-block">'+m.risk+'</div>'
+
+    // Harm pathway
+    +'<div class="sh">Harm pathway</div>'
+    +'<div class="harm-chain">'+m.harm.map((h,i)=>'<span class="cs">'+h+'</span>'+(i<m.harm.length-1?'<span class="ca">&rarr;</span>':'')).join('')+'</div>'
+
+    // Attributes
+    +'<div class="attr-grid">'
+      +'<div class="ac"><div class="al">Measurement method</div><div class="av">'+m.method+'</div></div>'
+      +'<div class="ac"><div class="al">Trigger conditions</div><div class="av">'+m.trigger+'</div></div>'
+    +'</div>'
+    +'<div class="phase-note"><i class="ti ti-clock" aria-hidden="true" style="font-size:11px;vertical-align:-2px;margin-right:4px"></i>'+m.phase_note+'</div>'
+
+    // Navigation
+    +'<div style="display:flex;gap:6px;margin-top:.75rem">'
+      +'<button onclick="navMetric(-1)" style="font-size:12px"><i class="ti ti-arrow-left" aria-hidden="true"></i> Previous</button>'
+      +'<button onclick="navMetric(1)" style="font-size:12px">Next <i class="ti ti-arrow-right" aria-hidden="true"></i></button>'
+    +'</div>';
 }
-function updateBucketOverride(id){
+
+function updateBucketOverride(id,val){
   if(!decisions[id])decisions[id]={};
   const m=METRICS.find(x=>x.id===id);
-  const val=document.getElementById('db-'+id).value;
-  decisions[id].bucketOverride=(val===m.bucket)?null:val;
+  decisions[id].bucketOverride=(val===m.bucket||val==='')?null:val;
   decisions[id].bucketConfirmed=false;
   renderList();renderDetail(id);renderBuckets();saveToStorage();
 }
@@ -958,63 +940,47 @@ function updateCalOverride(id){
   decisions[id].calOverride=document.getElementById(`dc-${id}`).value||null;
   renderList();renderDetail(id);saveToStorage();
 }
-function saveDecision(id){
-  if(!document.getElementById(`dm-${id}`))return;
-  if(!decisions[id])decisions[id]={};
-  const m=METRICS.find(x=>x.id===id);
-  const bVal=document.getElementById('db-'+id)?document.getElementById('db-'+id).value:null;
-  Object.assign(decisions[id],{
-    calOverride:document.getElementById(`dc-${id}`).value||null,
-    calRationale:document.getElementById(`dcr-${id}`).value,
-    method:document.getElementById(`dm-${id}`).value,
-    threshold:document.getElementById(`dt-${id}`).value,
-    owner:document.getElementById(`do-${id}`).value,
-    notes:document.getElementById(`dn-${id}`).value,
-    bucketOverride:bVal&&bVal!==m.bucket?bVal:decisions[id].bucketOverride||null
-  });
-}
-function markDone(id){saveDecision(id);statuses[id]="done";renderList();renderDetail(id);saveToStorage();}
-function markFlagged(id){saveDecision(id);statuses[id]="flagged";renderList();renderDetail(id);saveToStorage();}
-function clearStatus(id){saveDecision(id);delete statuses[id];renderList();renderDetail(id);saveToStorage();}
+function saveDecision(id){}
+
+
+
 function navMetric(dir){
   if(!activeId)return;
   const idx=filteredIds.indexOf(activeId),next=filteredIds[idx+dir];
   if(next!=null){saveDecision(activeId);selectMetric(next);}
 }
-function updateProgress(){
-  const done=Object.values(statuses).filter(s=>s==="done"||s==="flagged").length,pct=Math.round((done/58)*100);
-  document.getElementById("prog-fill").style.width=pct+"%";
-  document.getElementById("prog-lbl").textContent=`${done} of 58 reviewed (${pct}%)`;
-}
+
 function buildExport(){
-  const counts={confirm:0,strengthen:0,promote:0,demote:0};
-  METRICS.forEach(m=>{counts[getEffectiveCal(m)]++;});
-  let out="AVT TIER 1 WORKSHOP — ACUTE OUTPATIENTS & ED CALIBRATION\n";
-  out+="Generated: "+new Date().toLocaleDateString("en-GB")+"\n";
-  out+="=".repeat(60)+"\n\n";
-  out+="DEPLOYMENT CONTEXT: Acute outpatients & Emergency Department\n\n";
-  out+="CALIBRATION SUMMARY\n"+"-".repeat(40)+"\n";
-  out+=`Confirm Tier 1: ${counts.confirm}\nStrengthen: ${counts.strengthen}\nPromote: ${counts.promote}\nJustify demotion: ${counts.demote}\n\n`;
-  out+="BUCKET DEFINITIONS\n"+"-".repeat(40)+"\n\n";
+  let out='AVT TIER 1 METRICS — BUCKET ASSIGNMENTS\n';
+  out+='Deployment context: Acute outpatients & ED\n';
+  out+='Generated: '+new Date().toLocaleDateString('en-GB')+'\n';
+  out+='='.repeat(60)+'\n\n';
+  out+='BUCKET DEFINITIONS\n'+'-'.repeat(40)+'\n\n';
   Object.entries(BUCKETS).forEach(([k,b])=>{
-    const metrics=METRICS.filter(m=>m.bucket===k),def=bDefs[k];
-    out+=`${b.name} (${metrics.length} metrics)\nDefinition: ${def.definition}\nWhy it matters: ${def.rationale}\n\n`;
+    const metrics=METRICS.filter(m=>getEffectiveBucket(m)===k);
+    const def=bDefs[k];
+    out+=b.name+' ('+metrics.length+' metrics)\n';
+    out+='Definition: '+def.definition+'\n';
+    out+='Why it matters: '+def.rationale+'\n';
+    if(b.hazards&&b.hazards.length)out+='Related hazards: '+b.hazards.join(', ')+'\n';
+    out+='\n';
   });
-  out+="METRIC DECISIONS\n"+"-".repeat(40)+"\n\n";
-  METRICS.forEach(m=>{
-    const d=decisions[m.id]||{},st=getStatus(m.id),eCal=getEffectiveCal(m),eb=getEffectiveBucket(m);
-    out+=`${m.ref}: ${m.name}\nStatus: ${st.toUpperCase()} | Phase: ${PHASE_LABELS[m.phase]}\n`;
-    out+=`Bucket: ${BUCKETS[eb].name}${eb!==m.bucket?" [reassigned from "+BUCKETS[m.bucket].name+"]":""}${d.bucketConfirmed?" ✓ CONFIRMED":""}\n`;
-    out+=`Calibration: ${CAL_LABEL[eCal]}${d.calOverride?" [overridden]":""}\n`;
-    if(d.calRationale)out+=`Calibration rationale: ${d.calRationale}\n`;
-    if(d.method)out+=`Agreed measurement: ${d.method}\n`;
-    if(d.threshold)out+=`Agreed threshold: ${d.threshold}\n`;
-    if(d.owner)out+=`Owner: ${d.owner}\n`;
-    if(d.notes)out+=`Notes: ${d.notes}\n`;
-    out+="\n";
+  out+='METRICS BY BUCKET\n'+'-'.repeat(40)+'\n\n';
+  Object.entries(BUCKETS).forEach(([k,b])=>{
+    const metrics=METRICS.filter(m=>getEffectiveBucket(m)===k);
+    out+=b.name.toUpperCase()+'\n';
+    metrics.forEach(m=>{
+      const moved=getEffectiveBucket(m)!==m.bucket;
+      const conf=isBucketConfirmed(m);
+      out+='  '+m.ref+' — '+m.name
+        +(moved?' [reassigned from '+BUCKETS[m.bucket].name+']':'')
+        +(conf?' ✓':'')+'\n';
+    });
+    out+='\n';
   });
-  document.getElementById("exp-preview").textContent=out;
+  document.getElementById('exp-preview').textContent=out;
 }
+
 function downloadExport(){
   buildExport();
   const blob=new Blob([document.getElementById("exp-preview").textContent],{type:"text/plain"});
@@ -1068,15 +1034,7 @@ function clearStorage() {
 }
 
 // Auto-save decision fields on blur
-document.addEventListener('blur', function(e) {
-  const el = e.target;
-  if (!el.id) return;
-  if (/^(dm|dt|do|dn|dcr|dc)-\d+$/.test(el.id)) {
-    const id = parseInt(el.id.split('-').pop());
-    saveDecision(id);
-    saveToStorage();
-  }
-}, true);
+
 
 // ── Sync status indicator ─────────────────────────────────
 function showSyncStatus(state) {
